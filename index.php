@@ -43,12 +43,12 @@
                       <li class="form__item">
                         <label for="homer"> Homer Simpson </label>
 
-                        <input id="homer" type="checkbox" name="homer" />
+                        <input id="homer" type="checkbox" name="homer"/>
                       </li>
                       <li class="form__item">
                         <label for="marge"> Marge Simpson </label>
 
-                        <input id="marge" type="checkbox" name="marge" />
+                        <input id="marge" type="checkbox" name="marge"/>
                       </li>
                       <li class="form__item">
                         <label for="bart"> Bart Simpson </label>
@@ -85,6 +85,29 @@
           <div class="characters__container layout-container">
             <div class="characters__row layout-row">
               <ul class="characters__items">
+
+                <?php 
+                echo("testing here <br> <br>");
+                    if(isset($GET['submit'])){
+
+                        $lisa = $_GET['lisa'];
+                        var_dump($lisa);
+
+                        $characters = $_POST['character']; // get all characters from the form
+
+                        foreach ($characters as $key => $value){ 
+                            if ($value == "on") { // if the character was selected, update display property in db to true (1)
+                                $query = "UPDATE characters SET display=1 WHERE name=($value)";
+                                mysqli_query($db, $query);
+
+                            } else { // if the character was NOT selected, update display property in db to false (0)
+                                $query = "UPDATE characters SET display=0 WHERE name=($value)";
+                                mysqli_query($db, $query);
+
+                            }
+                        }
+                    }
+                ?>
 
                 <?php // Script: Interacts with a database and displays character information
 
