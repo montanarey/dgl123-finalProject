@@ -23,6 +23,7 @@
     <div id="content" class="site-content">
       <div id="primary" class="content-area">
         <div id="main" class="site-main">
+
           <div class="form__container layout-container">
             <div class="form__row layout-row">
               <div class="form__itemsContainer">
@@ -81,14 +82,28 @@
               </div>
             </div>
           </div>
-
           <div class="characters__container layout-container">
             <div class="characters__row layout-row">
               <ul class="characters__items">
-                  
+
+                <?php // Script: Interacts with a database and displays character information
+
+                $db = mysqli_connect('localhost', 'root', '', 'simpsons'); // database connection
+
+                $sql = "SELECT * FROM characters WHERE display = 1"; // Grab character info of those selected to display
+                $results = $db->query($sql);
+
+                while($row = $results->fetch_assoc()) {
+                    var_dump($row);
+                }
+
+            
+
+                ?>
               </ul>
             </div>
           </div>
+
         </div>
       </div>
     </div>
