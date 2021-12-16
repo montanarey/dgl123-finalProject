@@ -87,13 +87,16 @@
               <ul class="characters__items">
 
                 <?php 
+
+                $db = mysqli_connect('localhost', 'root', '', 'simpsons'); // database connection
+                require "handling.php";
+
+                // Collect data from form and update database display value
+
                 echo("testing here <br> <br>");
                     if(isset($GET['submit'])){
 
-                        $lisa = $_GET['lisa'];
-                        var_dump($lisa);
-
-                        $characters = $_POST['character']; // get all characters from the form
+                        $characters = $_POST['']; // get all characters from the form
 
                         foreach ($characters as $key => $value){ 
                             if ($value == "on") { // if the character was selected, update display property in db to true (1)
@@ -107,42 +110,20 @@
                             }
                         }
                     }
-                ?>
 
-                <?php // Script: Interacts with a database and displays character information
-
-                $db = mysqli_connect('localhost', 'root', '', 'simpsons'); // database connection
-
+                // Display character information based on database display value
+                
                 // Grab character info of those selected to display
                 $sql = "SELECT * FROM characters WHERE display = 1"; 
                 $results = $db->query($sql);
 
                 // For each character, display their information as an li
                 while($row = $results->fetch_assoc()) { 
-                    // Isolate character data from array
-                    $image_url = $row['image_url'];
-                    $first_name = $row['first_name'];
-                    $last_name = $row['last_name'];
-                    $age = $row['age'];
-                    $occupation = $row['occupation'];
-                    $voiced_by = $row['voiced_by'];
-
-                    // Display character data as html li block
-                    echo("
-                        <li class='characters__itemContainer'>
-                            <div class='characters__item'>  
-                                <img src=$image_url alt='$first_name' class='characters__image'>
-                                <div class='characters__info'>
-                                    <h3 class='characters__name'>$first_name $last_name</h3>
-                                    <div class='characters__age characters__attribute'><b>Age:</b> $age</div>
-                                    <div class='characters__occupation characters__attribute'><b>Occupation:</b> $occupation</div>
-                                    <div class='characters__voicedBy characters__attribute'><b>Voiced by:</b> $voiced_by</div>
-                                </div>
-                            </div>
-                        </li>                     
-                    ");
+                    displayCharacters($row['image_url'], $row['first_name'], $row['last_name'], $row['age'], $row['occupation'], $row['voiced_by']);
                 }
+                
                 ?>
+
               </ul>
             </div>
           </div>
