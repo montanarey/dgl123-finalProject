@@ -90,15 +90,35 @@
 
                 $db = mysqli_connect('localhost', 'root', '', 'simpsons'); // database connection
 
-                $sql = "SELECT * FROM characters WHERE display = 1"; // Grab character info of those selected to display
+                // Grab character info of those selected to display
+                $sql = "SELECT * FROM characters WHERE display = 1"; 
                 $results = $db->query($sql);
 
-                while($row = $results->fetch_assoc()) {
-                    var_dump($row);
+                // For each character, display their information as an li
+                while($row = $results->fetch_assoc()) { 
+                    // Isolate character data from array
+                    $image_url = $row['image_url'];
+                    $first_name = $row['first_name'];
+                    $last_name = $row['last_name'];
+                    $age = $row['age'];
+                    $occupation = $row['occupation'];
+                    $voiced_by = $row['voiced_by'];
+
+                    // Display character data as html li block
+                    echo("
+                        <li class='characters__itemContainer'>
+                            <div class='characters__item'>  
+                                <img src=$image_url alt='$first_name' class='characters__image'>
+                                <div class='characters__info'>
+                                    <h3 class='characters__name'>$first_name $last_name</h3>
+                                    <div class='characters__age characters__attribute'><b>Age:</b> $age</div>
+                                    <div class='characters__occupation characters__attribute'><b>Occupation:</b> $occupation</div>
+                                    <div class='characters__voicedBy characters__attribute'><b>Voiced by:</b> $voiced_by</div>
+                                </div>
+                            </div>
+                        </li>                     
+                    ");
                 }
-
-            
-
                 ?>
               </ul>
             </div>
