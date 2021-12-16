@@ -1,4 +1,10 @@
 <?php
+/*
+DGL123 Introduction to PHP
+Final Project
+Author: Montana Pistell n0145744
+Last Modified: 
+*/
 
 // Displays character data as html li block
 function displayCharacters($image_url, $first_name, $last_name, $age, $occupation, $voiced_by)

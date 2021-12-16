@@ -92,7 +92,6 @@
                 require "handling.php";
 
                 // Collect data from form and update database display value
-
                 echo("testing here <br> <br>");
                     if(isset($GET['submit'])){
 
@@ -102,18 +101,15 @@
                             if ($value == "on") { // if the character was selected, update display property in db to true (1)
                                 $query = "UPDATE characters SET display=1 WHERE name=($value)";
                                 mysqli_query($db, $query);
-
                             } else { // if the character was NOT selected, update display property in db to false (0)
                                 $query = "UPDATE characters SET display=0 WHERE name=($value)";
                                 mysqli_query($db, $query);
-
                             }
                         }
                     }
 
                 // Display character information based on database display value
                 
-                // Grab character info of those selected to display
                 $sql = "SELECT * FROM characters WHERE display = 1"; 
                 $results = $db->query($sql);
 
@@ -121,7 +117,7 @@
                 while($row = $results->fetch_assoc()) { 
                     displayCharacters($row['image_url'], $row['first_name'], $row['last_name'], $row['age'], $row['occupation'], $row['voiced_by']);
                 }
-                
+
                 ?>
 
               </ul>
