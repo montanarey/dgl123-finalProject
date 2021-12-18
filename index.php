@@ -92,25 +92,22 @@
                 require "handling.php";
 
                 // Collect data from form and update database display value
-                echo("testing here <br> <br>");
-                    if(isset($GET['submit'])){
+                if(isset($GET['submit'])){
+                	$characters = $_POST['']; // get all characters from the form
+                    // how can I get the characters as an array to iterate though, when each checkbox has a different name?
 
-                        $characters = $_POST['']; // get all characters from the form
-                        // how can I get the characters as an array to iterate though, when each checkbox has a different name?
-
-                        foreach ($characters as $key => $value){ 
-                            if ($value == "on") { // if the character was selected, update display property in db to true (1)
-                                $query = "UPDATE characters SET display=1 WHERE name=($value)";
-                                mysqli_query($db, $query);
-                            } else { // if the character was NOT selected, update display property in db to false (0)
-                                $query = "UPDATE characters SET display=0 WHERE name=($value)";
-                                mysqli_query($db, $query);
-                            }
-                        }
+                    foreach ($characters as $key => $value){ 
+                        if ($value == "on") { // if the character was selected, update display property in db to true (1)
+                            $query = "UPDATE characters SET display=1 WHERE name=($value)";
+                            mysqli_query($db, $query);
+                        } else { // if the character was NOT selected, update display property in db to false (0)
+                            $query = "UPDATE characters SET display=0 WHERE name=($value)";
+                            mysqli_query($db, $query);
+						}
                     }
+                }
 
                 // Display character information based on database display value
-                
                 $sql = "SELECT * FROM characters WHERE display = 1"; 
                 $results = $db->query($sql);
 
