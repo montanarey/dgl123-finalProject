@@ -4,7 +4,7 @@
     DGL123 Introduction to PHP
     Final Project
     Author: Montana Pistell n0145744
-    Last Modified: 
+    Last Modified:
  -->
   <head>
     <meta charset="UTF-8" />
@@ -23,20 +23,16 @@
     <div id="content" class="site-content">
       <div id="primary" class="content-area">
         <div id="main" class="site-main">
-
-          <div class="form__container layout-container">
-            <div class="form__row layout-row">
+			<div class="form__container layout-container">
+				<div class="form__row layout-row">
+				<h1>Learn More About Your Favourite Simpsons Characters!</h1>
               <div class="form__itemsContainer">
                 <div class="form__imageContainer">
-                  <img
-                    src="images/simpsons.jpg"
-                    alt="Simpsons"
-                    class="form__image"
-                  />
+                  <img src="images/simpsons.jpg" alt="Simpsons" class="form__image"/>
                 </div>
 
                 <div class="form__card">
-                  <h3 class="form__heading">Select characters to show</h3>
+                  <h3 class="form__heading">Select which characters you'd like to learn about</h3>
 
                   <form method="get">
                     <ul class="form__items">
@@ -75,7 +71,7 @@
                     <input
                       class="form__button"
                       type="submit"
-                      value="Show Characters"
+                      value="Display Character Information"
                     />
                   </form>
                 </div>
@@ -84,39 +80,41 @@
           </div>
           <div class="characters__container layout-container">
             <div class="characters__row layout-row">
+			  <h3>Character Details:</h3>
               <ul class="characters__items">
 
-                <?php 
+                <?php
 
-                $db = mysqli_connect('localhost', 'root', '', 'simpsons'); // database connection
-                require "handling.php";
+				$db = mysqli_connect('localhost', 'root', '', 'simpsons'); // database connection
+				require "handling.php";
 
-                // Collect data from form and update database display value
-                if(isset($GET['submit'])){
-                	$characters = $_POST['']; // get all characters from the form
-                    // how can I get the characters as an array to iterate though, when each checkbox has a different name?
+				// Collect data from form and update database display value
+				if (isset($GET['submit'])) {
+					$characters = $_POST['']; // get all characters from the form
 
-                    foreach ($characters as $key => $value){ 
-                        if ($value == "on") { // if the character was selected, update display property in db to true (1)
-                            $query = "UPDATE characters SET display=1 WHERE name=($value)";
-                            mysqli_query($db, $query);
-                        } else { // if the character was NOT selected, update display property in db to false (0)
-                            $query = "UPDATE characters SET display=0 WHERE name=($value)";
-                            mysqli_query($db, $query);
+					// how can I get the characters as an array to iterate though, when each checkbox has a different name?
+
+					foreach ($characters as $key => $value) {
+						if ($value == "on") { // if the character was selected, update display property in db to true (1)
+							$query = "UPDATE characters SET display=1 WHERE name=($value)";
+							mysqli_query($db, $query);
+						} else { // if the character was NOT selected, update display property in db to false (0)
+							$query = "UPDATE characters SET display=0 WHERE name=($value)";
+							mysqli_query($db, $query);
 						}
-                    }
-                }
+					}
+				}
 
-                // Display character information based on database display value
-                $sql = "SELECT * FROM characters WHERE display = 1"; 
-                $results = $db->query($sql);
+				// Display character information based on database display value
+				$sql = "SELECT * FROM characters WHERE display = 1";
+				$results = $db->query($sql);
 
-                // For each character, display their information as an li
-                while($row = $results->fetch_assoc()) { 
-                    displayCharacters($row['image_url'], $row['first_name'], $row['last_name'], $row['age'], $row['occupation'], $row['voiced_by']);
-                }
+				// For each character, display their information as an li
+				while ($row = $results->fetch_assoc()) {
+					displayCharacters($row['image_url'], $row['first_name'], $row['last_name'], $row['age'], $row['occupation'], $row['voiced_by']);
+				}
 
-                ?>
+				?>
 
               </ul>
             </div>
