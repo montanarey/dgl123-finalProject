@@ -96,6 +96,7 @@
                     if(isset($GET['submit'])){
 
                         $characters = $_POST['']; // get all characters from the form
+                        // how can I get the characters as an array to iterate though, when each checkbox has a different name?
 
                         foreach ($characters as $key => $value){ 
                             if ($value == "on") { // if the character was selected, update display property in db to true (1)
